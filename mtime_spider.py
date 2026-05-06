@@ -18,7 +18,7 @@ def mtime_spider(movie_id, max_comments=200):
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
         'Connection': 'keep-alive',
         'Content-Type': 'application/json',
-        'Cookie': 'searchHistoryCookie=%u8C01%u7684%u9752%u6625%u4E0D%u8FF7%u832B%2C%u8096%u7533%u514B%u7684%u6551%u8D4E%2C%u957F%u5B89%u4E09%u4E07%u91CC; Hm_lvt_07aa95427da600fc217b1133c1e84e5b=1777124113,1777125989; HMACCOUNT=4AA9740AC3A18227; Hm_lpvt_07aa95427da600fc217b1133c1e84e5b=1777125995',
+        'Cookie': 'Hm_lvt_07aa95427da600fc217b1133c1e84e5b=1778039614; HMACCOUNT=E3C22092ADAE6441; searchHistoryCookie=%u96C4%u72EE%2C%u96C4%u72EE%u5C11%u5E74; smidV2=202605052054170613a9185ce3888cf4b52cbf4b2e1bc200b6b0de93c0b9a90; Hm_lpvt_07aa95427da600fc217b1133c1e84e5b=1778039658; .thumbcache_c835bd016c362d09f235c52c6fca20c7=ZlagUPbIxIuWMcKA5bw6mBeJm5jsE5PB8j6s/NfATY4pc4KF2pVIHzH/23PXTskBr+nTrCKbOE0g4OMW8tbauw%3D%3D',
         'Host': 'front-gateway.mtime.com',
         'Origin': 'https://movie.mtime.com',
         'Referer': 'https://movie.mtime.com/',
@@ -28,9 +28,10 @@ def mtime_spider(movie_id, max_comments=200):
     comments = []
     page_index = 1
     while len(comments) < max_comments:
+        tt = int(time.time() * 1000)
         url = (
             f'https://front-gateway.mtime.com/library/movie/longCommentList.api?'
-            f'tt=1777125358588&movieId={movie_id}&pageIndex={page_index}&pageSize=20&orderType=1'
+            f'tt={tt}&movieId={movie_id}&pageIndex={page_index}&pageSize=20&orderType=1'
         )
         try:
             response = requests.get(url, headers=headers, timeout=10)
@@ -113,7 +114,7 @@ def lda_analysis(processed_docs, num_topics=5):
 # 主程序
 # ======================
 if __name__ == '__main__':
-    MOVIE_ID = '14249'  # 雄狮少年 Mtime ID
+    MOVIE_ID = '270067'  # 雄狮少年 Mtime ID
     MAX_COMMENTS = 200
 
     print("=== 开始爬取时光网数据 ===")
